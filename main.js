@@ -1,52 +1,78 @@
+// Inicializar Muuri
 const grid = new Muuri('.grid', {
-	layout: {
-		rounding: false
-	}
+    layout: {
+        fillGaps: true
+    }
 });
 
+// 1. Solución al amontonamiento: Refrescar cuando carguen las imágenes
 window.addEventListener('load', () => {
-	grid.refreshItems().layout();
-	document.getElementById('grid').classList.add('imagenes-cargadas');
+    grid.refreshItems().layout();
+    document.getElementById('grid').classList.add('imagenes-cargadas');
+});
 
-	// Agregamos los listener de los enlaces para filtrar por categoria.
-	const enlaces = document.querySelectorAll('#categorias a');
-	enlaces.forEach((elemento) => {
-		elemento.addEventListener('click', (evento) => {
-			evento.preventDefault();
-			enlaces.forEach((enlace) => enlace.classList.remove('activo'));
-			evento.target.classList.add('activo');
+// 2. Lógica de Filtros (Solución al botón "All")
+const enlaces = document.querySelectorAll('#categorias a');
 
-			const categoria = evento.target.innerHTML.toLowerCase();
-			categoria === 'todos' ? grid.filter('[data-categoria]') : grid.filter(`[data-categoria="${categoria}"]`);
-		});
-	});
+enlaces.forEach((enlace) => {
+    enlace.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Manejo de clase activa
+        enlaces.forEach(el => el.classList.remove('activo'));
+        enlace.classList.add('activo');
 
-	// Agregamos el listener para la barra de busqueda
-	document.querySelector('#barra-busqueda').addEventListener('input', (evento) => {
-		const busqueda = evento.target.value;
-		grid.filter( (item) => item.getElement().dataset.etiquetas.includes(busqueda) );
-	});
+        const categoria = enlace.dataset.categoria;
 
-	// Agregamos listener para las imagenes
-	const overlay = document.getElementById('overlay');
-	document.querySelectorAll('.grid .item img').forEach((elemento) => {
-		elemento.addEventListener('click', () => {
-			const ruta = elemento.getAttribute('src');
-			const descripcion = elemento.parentNode.parentNode.dataset.descripcion;
+        // Si es 'all' devuelve true para todos, si no, filtra por el data-categoria del item
+        grid.filter((item) => {
+            return categoria === 'all' ? true : item.getElement().dataset.categoria === categoria;
+        });
+    });
+});
 
-			overlay.classList.add('activo');
-			document.querySelector('#overlay img').src = ruta;
-			document.querySelector('#overlay .descripcion').innerHTML = descripcion;
-		});
-	});
+// 3. Lógica del Buscador
+const barraBusqueda = document.getElementById('barra-busqueda');
 
-	// Eventlistener del boton de cerrar
-	document.querySelector('#btn-cerrar-popup').addEventListener('click', () => {
-		overlay.classList.remove('activo');
-	});
+barraBusqueda.addEventListener('input', (e) => {
+    const busqueda = e.target.value.toLowerCase();
+    
+    grid.filter((item) => {
+        const descripcion = item.getElement().dataset.descripcion.toLowerCase();
+        return descripcion.includes(busqueda);
+    });
+});
 
-	// Eventlistener del overlay
-	overlay.addEventListener('click', (evento) => {
-		evento.target.id === 'overlay' ? overlay.classList.remove('activo') : '';
-	});
+// 4. Lógica del Overlay (Abrir imagen)
+const overlay = document.getElementById('overlay');
+const imagenOverlay = overlay.querySelector('img');
+const descripcionOverlay = overlay.querySelector('.descripcion');
+
+document.querySelectorAll('.item').forEach((item) => {
+    item.addEventListener('click', () => {
+        const ruta = item.querySelector('.item-contenido').dataset.imagen;
+        const texto = item.dataset.descripcion;
+
+        imagenOverlay.src = ruta;
+        descripcionOverlay.textContent = texto;
+        overlay.classList.add('activo');
+    });
+});
+
+// 5. Cerrar Overlay
+document.getElementById('btn-cerrar-popup').addEventListener('click', () => {
+    overlay.classList.remove('activo');
+});
+
+overlay.addEventListener('click', (e) => {
+    if (e.target.id === 'overlay') {
+        overlay.classList.remove('activo');
+    }
+});
+
+// Cerrar con tecla ESC
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        overlay.classList.remove('activo');
+    }
 });
