@@ -1,21 +1,18 @@
 /* =========================================
-   SISTEMA DE DISEÑO CLARO (Sustitución Total)
-   Mantiene estructura, cambia colores
+   SISTEMA DE DISEÑO CLARO
    ========================================= */
 :root {
-    /* Paleta de colores claros inspirada en la referencia */
-    --bg: #F0F2F5; /* Fondo claro principal */
-    --text-primary: #1A1A1A; /* Texto negro nítido para títulos y nombres */
-    --text-secondary: #555555; /* Texto gris suave para descripciones y subtítulos */
-    --text-muted: #888888; /* Texto gris muy suave para placeholder y footer muted */
-    --accent: #00D2FF; /* Tu color cyan característico para botones activos */
-    --accent-hover: #00A6CC; /* Un cyan más oscuro para el estado hover */
-    --card-bg: #FFFFFF; /* Fondo blanco puro para las tarjetas de imagen */
-    --shadow: 0 4px 15px rgba(0,0,0,0.06); /* Sombra muy suave para dar profundidad */
+    --bg: #F0F2F5;
+    --text-primary: #1A1A1A;
+    --text-secondary: #555555;
+    --text-muted: #888888;
+    --accent: #00D2FF;
+    --accent-hover: #00A6CC;
+    --card-bg: #FFFFFF;
+    --shadow: 0 4px 15px rgba(0,0,0,0.06);
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* 1. Base y Reset */
 * {
     margin: 0;
     padding: 0;
@@ -36,7 +33,6 @@ body {
     padding: 40px 0;
 }
 
-/* 2. Header y Logo */
 header {
     text-align: center;
     margin-bottom: 50px;
@@ -56,14 +52,13 @@ header {
     font-size: 1.1rem;
 }
 
-/* 3. Buscador */
 .barra-busqueda {
     width: 100%;
     max-width: 500px;
     padding: 15px 25px;
     border-radius: 50px;
-    border: 2px solid #E1E8ED; /* Borde sutil y claro */
-    background: #FFFFFF; /* Fondo blanco puro */
+    border: 2px solid #E1E8ED;
+    background: #FFFFFF;
     color: var(--text-primary);
     outline: none;
     transition: var(--transition);
@@ -72,16 +67,11 @@ header {
     font-size: 1rem;
 }
 
-.barra-busqueda::placeholder {
-    color: #AAB8C2; /* Color de placeholder muy suave */
-}
-
 .barra-busqueda:focus {
     border-color: var(--accent);
     box-shadow: 0 0 10px rgba(0, 210, 255, 0.1);
 }
 
-/* 4. Categorías (Filtros) */
 .categorias {
     display: flex;
     justify-content: center;
@@ -102,21 +92,17 @@ header {
     transition: var(--transition);
 }
 
-/* Hover de botones - Estilo Claro */
 .categorias a:hover {
     background: #F5F8FA;
     border-color: var(--accent);
-    color: var(--text-primary);
 }
 
-/* Estado Activo de botones - Estilo Claro */
 .categorias a.activo {
     background: var(--accent);
     color: #FFFFFF;
     border-color: var(--accent);
 }
 
-/* 5. Grid de Muuri (Mantiene Estructura) */
 .grid {
     position: relative;
     width: 100%;
@@ -131,12 +117,10 @@ header {
 .item {
     position: absolute;
     display: block;
-    width: 25%; /* 4 columnas */
+    width: 25%;
     padding: 12px;
-    z-index: 1;
 }
 
-/* Responsividad del Grid */
 @media (max-width: 1000px) { .item { width: 33.33%; } }
 @media (max-width: 700px) { .item { width: 50%; } }
 @media (max-width: 480px) { .item { width: 100%; } }
@@ -145,9 +129,9 @@ header {
     position: relative;
     border-radius: 12px;
     overflow: hidden;
-    background: var(--card-bg); /* Fondo blanco de tarjeta */
+    background: var(--card-bg);
     cursor: pointer;
-    box-shadow: var(--shadow); /* Profundidad suave para que "floten" */
+    box-shadow: var(--shadow);
 }
 
 .item img {
@@ -161,14 +145,13 @@ header {
     transform: scale(1.08);
 }
 
-/* 6. Overlay / Modal (Estilo Claro) */
 .overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.98); /* Fondo blanco casi opaco */
+    background: rgba(255, 255, 255, 0.98);
     display: none;
     flex-direction: column;
     justify-content: center;
@@ -204,11 +187,6 @@ header {
     border: none;
     font-size: 40px;
     cursor: pointer;
-    transition: 0.3s;
-}
-
-#btn-cerrar-popup:hover {
-    color: var(--accent);
 }
 
 .overlay .descripcion {
@@ -218,28 +196,9 @@ header {
     text-align: center;
 }
 
-/* 7. Footer (Estilo Claro) */
 footer {
     text-align: center;
     padding: 60px 0;
     border-top: 1px solid #E1E8ED;
     margin-top: 50px;
-}
-
-.redes-sociales a {
-    color: var(--text-primary);
-    font-size: 1.8rem;
-    margin: 0 15px;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.redes-sociales a:hover {
-    color: var(--accent);
-}
-
-.creado-por {
-    margin-top: 20px;
-    color: var(--text-muted);
-    font-size: 1rem;
 }
